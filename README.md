@@ -1,2 +1,2 @@
-# discrete-math
+# Discrete-math
 Homeworks for discrete math course
