@@ -1,0 +1,102 @@
+start: s
+accept: ac
+reject: rj
+blank: _
+ 
+s 0 -> s 0 >
+s 1 -> s 1 >
+s * -> s1 ^ >
+s _ -> min _ <
+ 
+s1 0 -> s2 0 >
+s1 1 -> s 1 >
+s2 _ -> s3 _ <
+s2 0 -> s 0 >
+s2 1 -> s 1 >
+s3 0 -> s3 _ <
+s3 ^ -> s3 _ <
+s3 1 -> s3 _ <
+s3 _ -> ac 0 ^
+ 
+min ^ -> go ^ >
+min 1 -> gomul 0 <
+min 0 -> min 1 <
+ 
+gomul 0 -> gomul 0 <
+gomul 1 -> gomul 1 <
+gomul ^ -> mul ^ <
+ 
+mul 0 -> gowrite0 * <
+mul 1 -> gowrite1 ! <
+mul _ -> clearans _ <
+ 
+clearans ! -> clearans 1 <
+clearans * -> clearans 0 <
+clearans _ -> clearfirst _ >
+clearans 0 -> clearfirst 0 >
+clearans 1 -> clearfirst 1 >
+ 
+clearfirst 0 -> clearfirst 0 >
+clearfirst 1 -> clearfirst 1 >
+clearfirst ! -> clearfirst 1 >
+clearfirst * -> clearfirst 0 >
+clearfirst _ -> clearfirst _ >
+clearfirst ^ -> golast ^ >
+ 
+golast 0 -> golast 0 >
+golast 1 -> golast 1 >
+golast _ -> min _ <
+ 
+gowrite0 0 -> gowrite0 0 <
+gowrite0 1 -> gowrite0 1 <
+gowrite0 _ -> write0 _ <
+ 
+gowrite1 0 -> gowrite1 0 <
+gowrite1 1 -> gowrite1 1 <
+gowrite1 _ -> write1 _ <
+ 
+goto 0 -> goto 0 >
+goto 1 -> goto 1 >
+goto ! -> goto ! >
+goto * -> goto * >
+goto _ -> goto1 _ >
+ 
+goto1 0 -> goto1 0 >
+goto1 1 -> goto1 1 >
+goto1 ^ -> mul ^ <
+goto1 ! -> mul ! <
+goto1 * -> mul * <
+ 
+write0 * -> write0 * <
+write0 ! -> write0 ! <
+write0 0 -> goto * >
+write0 1 -> goto ! >
+write0 _ -> goto * >
+ 
+write1 * -> write1 * <
+write1 ! -> write1 ! <
+write1 0 -> goto ! >
+write1 1 -> plus1 * <
+write1 _ -> goto ! >
+ 
+plus1 0 -> goto 1 >
+plus1 1 -> plus1 0 <
+plus1 _ -> goto 1 >
+ 
+go 1 -> go _ >
+go _  -> go2 _ <
+ 
+go2 _ -> go2 _ <
+go2 ^ -> go3 _ <
+ 
+go3 1 -> go3 _ <
+go3 0 -> go3 _ <
+go3 _ -> go4 _ <
+ 
+go4 _ -> go4 _ <
+go4 0 -> go5 0 <
+go4 1 -> go5 1 <
+ 
+go5 0 -> go5 0 <
+go5 1 -> go5 1 <
+go5 _ -> ac _ >

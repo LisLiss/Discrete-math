@@ -1,0 +1,93 @@
+start: checkeven
+accept: ac
+reject: rj
+blank: _
+
+checkeven 0 -> checkeven1 0 >
+checkeven1 0 -> checkeven 0 >
+checkeven 1 -> checkeven1 1 >
+checkeven1 1 -> checkeven 1 >
+checkeven _ -> goto _ <
+checkeven1 _ -> rj _ ^
+
+goto 0 -> goto 0 <
+goto 1 -> goto 1 <
+goto _ -> s _ >
+
+s 0 -> checkodd 0 ^
+s 1 -> checkodd 1 ^
+
+to 1 -> go ! >
+to 0 -> go * >
+
+go * -> back * <
+go ! -> back ! <
+go _ -> back _ <
+go 0 -> go 0 >
+go 1 -> go 1 >
+
+back 0 -> goback * <
+back 1 -> goback ! <
+
+goback 0 -> goback 0 <
+goback 1 -> goback 1 <
+goback * -> s * >
+goback ! -> s ! >
+
+checkback 0 -> checkback 0 <
+checkback 1 -> checkback 1 <
+checkback ! -> no ! >
+checkback * -> no * >
+checkback _ -> no _ >
+
+checkodd 0 -> checkoddr1 0 >
+checkodd 1 -> checkoddr1 1 >
+checkoddr1 0 -> checkoddr 0 >
+checkoddr1 1 -> checkoddr 1 >
+checkoddr * -> checkoddl1 * <
+checkoddr ! -> checkoddl1 ! <
+checkoddr _ -> checkoddl1 _ <
+checkoddr 0 -> checkback 0 <
+checkoddr 1 -> checkback 1 <
+checkoddl1 0 -> checkoddl2 0 <
+checkoddl1 1 -> checkoddl2 1 <
+checkoddl2 0 -> checkoddl 0 <
+checkoddl2 1 -> checkoddl 1 <
+checkoddl * -> h * >
+checkoddl ! -> h ! >
+checkoddl _ -> h _ >	
+checkoddl 0 -> no 0 >
+checkoddl 1 -> no 1 >
+
+no 0 -> to 0 ^
+no 1 -> to 1 ^
+
+h 0 -> goh * <
+h 1 -> goh ! <
+
+goh ww -> goh ww <
+goh * -> goh * <
+goh ! -> goh ! <
+goh w -> tan w >
+goh _ -> tan _ >
+
+tan ! -> tanone w >
+tan * -> tanzero w >
+
+tanone ! -> tanone ! >
+tanone * -> tanone * >
+tanone ww -> tanone ww >
+tanone 0 -> rj 0 ^
+tanone 1 -> well ww >
+
+tanzero ! -> tanzero ! >
+tanzero * -> tanzero * >
+tanzero ww -> tanzero ww >
+tanzero 1 -> rj 1 ^
+tanzero 0 -> well ww >
+
+well ! -> goh 1 <
+well * -> goh 0 <
+well _ -> ac _ ^
+
+

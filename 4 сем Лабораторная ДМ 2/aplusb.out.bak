@@ -1,0 +1,32 @@
+start: s
+accept: ac
+reject: rj
+blank: _
+s 0 -> s 0 >
+s 1 -> s 1 >
+s + -> s + >
+s _ -> min _ <
+
+min 1 -> go 0 <
+min 0 -> min 1 <
+min + -> done + ^
+
+done + -> done _ >
+done 0 -> done _ >
+done _ -> beg _ <
+
+beg _ -> beg _ <
+beg 0 -> goto 0 <
+beg 1 -> goto 1 <
+
+goto 0 -> goto 0 <
+goto 1 -> goto 1 <
+goto _ -> ac _ >
+
+go 0 -> go 0 <
+go 1 -> go 1 <
+go + -> plus + <
+
+plus 0 -> s 1 >
+plus 1 -> plus 0 <
+plus _ -> s 1 >

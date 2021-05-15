@@ -1,0 +1,38 @@
+2
+S 0 _ -> S _ > 0 >
+S 1 _ -> S _ > 1 >
+
+S ( _ -> S _ > ( >
+S ) _ -> or _ ^ _ <
+
+or _ 0 -> or _ ^ _ <
+or _ 1 -> one _ ^ _ <
+or _ ( -> S _ > 0 >
+or _ ) -> or2 _ ^ _ <
+or _ _ -> AC 0 ^ _ ^
+
+or2 _ 0 -> S _ > 0 >
+or2 _ 1 -> S _ > 0 >
+
+one _ 0 -> one _ ^ _ <
+one _ 1 -> one _ ^ _ <
+one _ ( -> S _ > 1 >
+one _ ) -> oneone _ ^ _ <
+one _ _ -> AC 1 ^ _ <
+
+oneone _ 0 -> S _ > 0 >
+oneone _ 1 -> S _ > 1 >
+
+S _ _ -> or _ ^ _ <
+
+S a _ -> and _ > _ <
+
+and 0 0 -> S _ > 0 >
+and 0 1 -> S _ > 0 >
+and 1 0 -> S _ > 0 >
+and 1 1 -> S _ > 1 >
+and ( 0 -> and ( ^ 0 >
+and ( 1 -> and ( ^ 1 >
+and ( _ -> S _ > ) >
+
+S o _ -> S _ > _ ^

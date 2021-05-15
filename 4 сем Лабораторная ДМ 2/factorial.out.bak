@@ -1,0 +1,214 @@
+start: S
+accept: ac
+reject: rj
+blank: _
+ 
+itsfirst 0 -> S 0 ^
+itsfirst 1 -> firste 1 >
+firste _ -> ac _ <
+firste 0 -> S 0 <
+firste 1 -> S 1 <
+
+
+S 0 -> S 0 >
+S 1 -> S 1 >
+S _ -> BACK e <
+
+BACK 0 -> GO0 * <
+BACK 1 -> GO1 ! <
+BACK _ -> CLEAR _ >
+
+
+GO0 0 -> GO0 0 <
+GO0 1 -> GO0 1 <
+GO0 _ -> WRITE0 _ <
+
+GO1 0 -> GO1 0 <
+GO1 1 -> GO1 1 <
+GO1 _ -> WRITE1 _ <
+
+WRITE0 0 -> WRITE0 0 <
+WRITE0 1 -> WRITE0 1 <
+WRITE0 _ -> GOFIRST 0 >
+
+WRITE1 0 -> WRITE1 0 <
+WRITE1 1 -> WRITE1 1 <
+WRITE1 _ -> GOFIRST 1 >
+
+GOFIRST 0 -> GOFIRST 0 >
+GOFIRST 1 -> GOFIRST 1 >
+GOFIRST _ -> GOSECOND _ >
+
+GOSECOND 0 -> GOSECOND 0 >
+GOSECOND 1 -> GOSECOND 1 >
+GOSECOND ! -> BACK ! <
+GOSECOND * -> BACK * <
+
+CLEAR ! -> CLEAR 1 >
+CLEAR * -> CLEAR 0 >
+CLEAR _ -> BACKCLEAR _ <
+CLEAR e -> BACKCLEAR e <
+
+BACKCLEAR 0 -> BACKCLEAR 0 <
+BACKCLEAR 1 -> BACKCLEAR 1 <
+BACKCLEAR _ -> MIN _ <
+
+MIN 1 -> GODELZERO 0 <
+MIN 0 -> MIN 1 <
+
+GODELZERO 0 -> GODELZERO 0 <
+GODELZERO 1 -> GODELZERO 1 <
+GODELZERO _ -> DELZERO _ >
+
+DELZERO 0 -> DELZERO _ >
+DELZERO 1 ->  GONEWWRITE 1 >
+DELZERO _ -> s _ >
+
+GONEWWRITE 0 -> GONEWWRITE 0 >
+GONEWWRITE 1 -> GONEWWRITE 1 >
+GONEWWRITE _ -> BACK _ <
+
+
+s 0 -> s 0 >
+s 1 -> s 1 >
+s _ -> s1 _ >
+s e -> ac e ^
+
+s1 0 -> s1 0 >
+s1 1 -> s1 1 >
+s1 _ -> min _ <
+s1 e -> min e <
+ 
+min _ -> go _ >
+min 1 -> gomul 0 <
+min 0 -> min 1 <
+ 
+gomul 0 -> gomul 0 <
+gomul 1 -> gomul 1 <
+gomul _ -> mul _ <
+ 
+mul 0 -> gowrite0 * <
+mul 1 -> gowrite1 ! <
+mul _ -> clearans _ <
+ 
+clearans ! -> clearans 1 <
+clearans * -> clearans 0 <
+clearans _ -> clearfirst _ >
+clearans 0 -> clearfirst 0 >
+clearans 1 -> clearfirst 1 >
+ 
+clearfirst 0 -> clearfirst 0 >
+clearfirst 1 -> clearfirst 1 >
+clearfirst _ -> clearfirst2 _ >
+ 
+clearfirst2 ! -> clearfirst2 1 >
+clearfirst2 * -> clearfirst2 0 >
+clearfirst2 _ -> golast _ >
+
+golast 0 -> golast 0 >
+golast 1 -> golast 1 >
+golast _ -> min _ <
+golast e -> min e <
+
+ 
+gowrite0 0 -> gowrite0 0 <
+gowrite0 1 -> gowrite0 1 <
+gowrite0 _ -> write0 _ <
+ 
+gowrite1 0 -> gowrite1 0 <
+gowrite1 1 -> gowrite1 1 <
+gowrite1 _ -> write1 _ <
+ 
+goto 0 -> goto 0 >
+goto 1 -> goto 1 >
+goto ! -> goto ! >
+goto * -> goto * >
+goto _ -> goto1 _ >
+ 
+goto1 0 -> goto1 0 >
+goto1 1 -> goto1 1 >
+goto1 _ -> mul _ <
+goto1 ! -> mul ! <
+goto1 * -> mul * <
+ 
+write0 * -> write0 * <
+write0 ! -> write0 ! <
+write0 0 -> goto * >
+write0 1 -> goto ! >
+write0 _ -> goto * >
+ 
+write1 * -> write1 * <
+write1 ! -> write1 ! <
+write1 0 -> goto ! >
+write1 1 -> plus1 * <
+write1 _ -> goto ! >
+ 
+plus1 0 -> goto 1 >
+plus1 1 -> plus1 0 <
+plus1 _ -> goto 1 >
+ 
+go 1 -> go _ >
+go _  -> go2 e <
+go e -> GOANS _ <
+
+GOANS _ -> GOANS _ <
+GOANS 0 -> DELANS _ <
+GOANS 1 -> DELANS _ <
+
+DELANS 0 -> DELANS _ <
+DELANS 1 -> DELANS _ <
+DELANS _ -> ANS _ <
+
+ANS 0 -> ANS 0 <
+ANS 1 -> ANS 1 <
+ANS _ -> ac _ >
+
+
+go2 _ -> go2 _ <
+go2 0 -> go3 _ <
+go2 1 -> go3 _ <
+ 
+go3 1 -> go3 _ <
+go3 0 -> go3 _ <
+go3 _ -> MAKENUM _ <
+ 
+MAKENUM ! -> MAKENUM ! <
+MAKENUM * -> MAKENUM * <
+MAKENUM 0 -> GONUM0 * >
+MAKENUM 1 -> GONUM1 ! >
+MAKENUM _ -> DELNUM _ >
+
+DELNUM ! -> DELNUM _ >
+DELNUM * -> DELNUM _ >
+DELNUM _ -> DELE _ >
+
+GONUM0 _ -> GONUM0 _ >
+GONUM0 ! -> GONUM0 ! >
+GONUM0 * -> GONUM0 * >
+GONUM0 e -> WRITENUM0 e <
+GONUM0 0 -> WRITENUM0 0 <
+GONUM0 1 -> WRITENUM0 1 <
+
+GONUM1 _ -> GONUM1 _ >
+GONUM1 ! -> GONUM1 ! >
+GONUM1 * -> GONUM1 * >
+GONUM1 e -> WRITENUM1 e <
+GONUM1 0 -> WRITENUM1 0 <
+GONUM1 1 -> WRITENUM1 1 <
+
+WRITENUM0 _ -> GOMAKENUM 0 <
+WRITENUM1 _ -> GOMAKENUM 1 <
+
+GOMAKENUM _ -> GOMAKENUM _ <
+GOMAKENUM ! -> MAKENUM ! <
+GOMAKENUM * -> MAKENUM * <
+
+DELE 0 -> DELE 0 >
+DELE 1 -> DELE 1 >
+DELE _ -> DELE _ >
+DELE e -> BACKDELE _ <
+
+BACKDELE 0 -> BACKDELE 0 <
+BACKDELE 1 -> BACKDELE 1 <
+BACKDELE _ -> s _ >
+

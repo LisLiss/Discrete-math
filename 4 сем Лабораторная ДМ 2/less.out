@@ -1,0 +1,65 @@
+start: s
+accept: ac
+reject: rj
+blank: _
+
+s ! -> s ! >
+s * -> s * >
+s < -> checklength < >
+s 1 -> go ! >
+s 0 -> go * >
+
+go 1 -> go 1 >
+go 0 -> go 0 >
+go < -> gotwo < >
+
+gotwo ! -> gotwo ! >
+gotwo * -> gotwo * >
+gotwo 1 -> begin ! <
+gotwo 0 -> begin * <
+gotwo _ -> rj _ ^
+
+begin * -> begin * <
+begin ! -> begin ! <
+begin 1 -> begin 1 <
+begin 0 -> begin 0 <
+begin < -> begin < <
+begin _ -> s _ >
+
+checklength ! -> checklength ! >
+checklength * -> checklength * >
+checklength _ -> beginc _ <
+checklength 1 -> ac 1 ^
+checklength 0 -> ac 0 ^
+
+beginc * -> beginc * <
+beginc ! -> beginc ! <
+beginc 1 -> beginc 1 <
+beginc 0 -> beginc 0 <
+beginc < -> beginc < <
+beginc _ -> check _ >
+
+check 0 -> check 0 >
+check 1 -> check 1 >
+check < -> rj < ^
+check ! -> goone 1 >
+check * -> gozero 0 >
+
+goone ! -> goone ! >
+goone * -> goone * >
+goone < -> checkone < >
+
+checkone 0 -> checkone 0 >
+checkone 1 -> checkone 1 >
+checkone ! -> beginc 1 <
+checkone * -> rj 0 ^
+
+gozero ! -> gozero ! >
+gozero * -> gozero * >
+gozero < -> checkzero < >
+
+checkzero 0 -> checkzero 0 >
+checkzero 1 -> checkzero 1 >
+checkzero ! -> ac 1 ^
+checkzero * -> beginc 0 <
+

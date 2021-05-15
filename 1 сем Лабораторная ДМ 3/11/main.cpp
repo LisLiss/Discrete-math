@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+ifstream f1("subsets.in");
+ofstream f2("subsets.out");
+
+int n;
+
+void print(vector <int> s){
+    for (int i=0; i<s.size()-1; i++){
+        f2<<s[i]<<" ";
+    }
+    f2<<s[s.size()-1]<<endl;
+}
+
+void generate(vector <int> x){
+    print(x);
+    for (int i=x[x.size()-1]+1; i<n+1; i++){
+        vector <int> s = x;
+        s.push_back(i);
+        generate(s);
+    }
+}
+int main()
+{
+    f1>>n;
+    vector<int> s;
+    f2<<endl;
+    for (int i=1; i<n+1; i++){
+        vector<int> s;
+        s.push_back(i);
+        generate(s);
+    }
+    return 0;
+}

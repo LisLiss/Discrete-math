@@ -1,0 +1,80 @@
+3
+S 0 _ _ -> S 0 > 0 > _ ^
+S 1 _ _ -> S 1 > 1 > _ ^
+S | _ _ -> S | > | > _ ^
+S _ _ _ -> min _ < _ < _ ^
+
+min 0 0 _ -> min 0 < 1 < _ ^
+min 0 1 _ -> gomin 0 < 0 < _ ^
+min 1 0 _ -> min 1 < 1 < _ ^
+min 1 1 _ -> gomin 1 < 0 < _ ^
+min | | _ -> zero | > | > _ ^
+min _ _ _ -> zero _ > _ > _ ^
+
+zero 0 1 _ -> zero 0 > w > 0 >
+zero 1 1 _ -> zero 1 > w > 1 >
+zero | | _ -> gomin | < | < | >
+zero _ _ _ -> gomin _ < _ < | >
+
+
+gomin 0 0 _ -> gomin 0 < 0 < _ ^
+gomin 0 1 _ -> gomin 0 < 1 < _ ^
+gomin 0 w _ -> gomin 0 < w < _ ^
+gomin 1 0 _ -> gomin 1 < 0 < _ ^
+gomin 1 1 _ -> gomin 1 < 1 < _ ^
+gomin 1 w _ -> gomin 1 < w < _ ^
+gomin | | _ -> checkmin | < | < _ ^
+gomin _ _ _ -> checkend _ > _ > _ ^
+
+checkmin 0 0 _ -> min 0 ^ 0 ^ _ ^
+checkmin 0 1 _ -> min 0 ^ 1 ^ _ ^
+checkmin 1 0 _ -> min 1 ^ 0 ^ _ ^
+checkmin 1 1 _ -> min 1 ^ 1 ^ _ ^
+checkmin 0 w _ -> gomin 0 ^ w ^ _ ^
+checkmin 1 w _ -> gomin 0 ^ w ^ _ ^
+
+checkend 0 w _ -> checkend 0 > w > _ ^
+checkend 1 w _ -> checkend 1 > w > _ ^
+checkend | | _ -> checkend | > | > _ ^
+checkend 0 1 _ -> goend 0 > 1 > _ ^
+checkend 0 0 _ -> goend 0 > 0 > _ ^
+checkend 1 1 _ -> goend 1 > 1 > _ ^
+checkend 1 0 _ -> goend 1 > 0 > _ ^
+checkend 0 1 _ -> goend 0 > 1 > _ ^
+checkend _ _ _ -> delstick _ ^ _ ^ _ <
+
+goend 0 w _ -> goend 0 > w > _ ^
+goend 1 w _ -> goend 1 > w > _ ^
+goend | | _ -> goend | > | > _ ^
+goend 0 1 _ -> goend 0 > 1 > _ ^
+goend 0 0 _ -> goend 0 > 0 > _ ^
+goend 1 1 _ -> goend 1 > 1 > _ ^
+goend 1 0 _ -> goend 1 > 0 > _ ^
+goend 0 1 _ -> goend 0 > 1 > _ ^
+goend _ _ _ -> checkmin _ < _ < _ ^
+
+delstick _ _ | -> gowrite _ < _ < _ <
+
+gowrite 0 w 0 -> gowrite 0 < w < 0 <
+gowrite 0 w 1 -> gowrite 1 < w < 1 <
+gowrite 0 w | -> gowrite | < w < | <
+gowrite 1 w 0 -> gowrite 0 < w < 0 <
+gowrite 1 w 1 -> gowrite 1 < w < 1 <
+gowrite 1 w | -> gowrite | < w < | <
+gowrite | w 0 -> gowrite 0 < w < 0 <
+gowrite | w 1 -> gowrite 1 < w < 1 <
+gowrite | w | -> gowrite | < w < | <
+gowrite _ _ _ -> AC _ > _ > _ > 
+
+
+
+
+
+
+
+
+
+
+
+
+
